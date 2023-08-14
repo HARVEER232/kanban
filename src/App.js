@@ -2,11 +2,12 @@ import logo from './logo.svg';
 import './App.css';
 import { useState, useEffect } from 'react'
 import Priority from './components/Priority'
+import Users from './components/Users'
 import DisplayComponent from './components/DisplayComponent'
 import WelcomePage from './components/WelcomePage/WelcomePage'
 function App() {
   const [showPriority, setShowPriority] = useState(false);
-  const [showStatus, setShowStatus] = useState(false)
+  const [showUsers, setShowUsers] = useState(false)
   const [showDisplayButton, setShowDisplayButton] = useState(false)
   const [apidata, setApiData] = useState([]);
   useEffect(() => {
@@ -30,7 +31,12 @@ function App() {
   const harveer = (status, priority) => {
     if (status === "Status" && priority === "Priority") {
       setShowPriority(true)
+      setShowUsers(false)
+    } else if (status === "User") {
+      setShowUsers(true)
+      setShowPriority(false)
     }
+
   }
   const closeSettingModal = () => {
     setShowDisplayButton(!showDisplayButton)
@@ -45,8 +51,8 @@ function App() {
       <div className="dataMainDiv">
         {showPriority ?
           <Priority cardData={apidata} />
-          :
-          <WelcomePage />
+          : showUsers ? <Users cardData={apidata} /> :
+            <WelcomePage />
         }
       </div>
     </div>
